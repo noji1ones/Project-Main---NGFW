@@ -1,0 +1,36 @@
+version: '3.8'
+ 
+services:
+  api:
+    build: ./api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./model:/app/model
+ 
+  dashboard:
+    build: ./dashboard
+    ports:
+      - "8501:8501"
+    depends_on:
+      - api
+    volumes:
+      - ./model:/app/model
+ 
+  sensor:
+    build: ./sensors
+    volumes:
+      - zeek_logs:/opt/zeek/logs/current
+    depends_on:
+      - api
+ 
+  network_lab:
+    build: ./network_lab
+    privileged: true
+    depends_on:
+      - api
+    volumes:
+      - zeek_logs:/app/zeek_logs:ro
+ 
+volumes:
+  zeek_logs:
