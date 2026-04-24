@@ -3,3 +3,7 @@ requests
 pandas
 shap
 matplotlib
+numpy
+joblib
+scikit-learn
+onnxruntime
